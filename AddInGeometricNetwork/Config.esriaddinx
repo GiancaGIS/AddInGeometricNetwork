@@ -1,0 +1,57 @@
+﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>AddInGeometricNetwork</Name>
+  <AddInID>{81a80cfe-bcc3-4d6d-8245-4b52003bfd86}</AddInID>
+  <Description>AddIn per semplici analisi di GN</Description>
+  <Version>1.5</Version>
+  <Image>Images\Network.png</Image>
+  <Author>Giancarlo Messina</Author>
+  <Company>GiancaGIS</Company>
+  <Date>20/05/2020</Date>
+  <Targets>
+    <Target name="Desktop" version="10.8" />
+  </Targets>
+  <AddIn language="CLR" library="AddInGeometricNetwork.dll" namespace="AddInGeometricNetwork">
+    <ArcMap>
+      <Commands>
+        <Tool id="AddInGeometricNetwork_ToolSelezionaLinea" class="ToolSelezionaLinea" message="Clicca qui per selezionare una tratta" caption="Ricava Info Topologica su tratta" tip="" category="GiancaGIS" image="" />
+        <Button id="AddInGeometricNetwork_ArcGISAddin1" class="apriDockable" message="Apri Dockable" caption="Apri Dockable" tip="" category="GiancaGIS" image="" />
+        <Tool id="GiancaGIS_AddInGeometricNetwork_toolSelezionaElementoPuntualeGN" class="ElementoPuntuale" message="" caption="Seleziona Junction GN" tip="" category="GiancaGIS" image="Images\punto.png" />
+        <Tool id="GiancaGIS_AddInGeometricNetwork_toolSelezionaElementoLineareGN" class="ElementoLineare" message="" caption="Seleziona Edge GN" tip="" category="GiancaGIS" image="Images\linea.png" />
+        <Button id="GiancaGIS_AddInGeometricNetwork_apriDockableSelezione" class="apriDockableSelezione" message="" caption="Apri Dockable" tip="Add-in command tooltip." category="GiancaGIS" image="Images\DockableWindow.png" />
+        <Button id="GiancaGIS_AddInGeometricNetwork_btnRimuoviGraphicsMappa" class="btnRimuoviGraphicsMappa" message="" caption="Rimuovi tutti i Graphics" tip="Clicca qui per rimuovere tutti i Graphics dalla active view corrente" category="GiancaGIS" image="Images\btnRimuoviGraphicsMappa.png" />
+      </Commands>
+      <DockableWindows>
+        <DockableWindow id="AddInGeometricNetwork_DockableWindow" class="DockableWindow+AddinImpl" caption="GiancaGIS Dockable" image="Images\DockableWindow.png">
+          <InitialPlacement height="300" width="300" state="pinned" position="float" />
+        </DockableWindow>
+        <DockableWindow id="GiancaGIS_AddInGeometricNetwork_dockableSelezione" class="dockableSelezione+AddinImpl" caption="GiancaGIS Dockable Selezione GN" image="Images\DockableWindow.png">
+          <InitialPlacement height="300" width="300" state="pinned" position="bottom" />
+        </DockableWindow>
+      </DockableWindows>
+      <Toolbars>
+        <Toolbar id="AddInGeometricNetwork_GiancaGIS_Toolbar_Geometric" caption="GiancaGIS Toolbar Geometric Network" showInitially="true">
+          <Items>
+            <Item refID="GiancaGIS_AddInGeometricNetwork_Menu_Trace" />
+            <Item refID="GiancaGIS_AddInGeometricNetwork_Menu_Selezione" />
+            <Button refID="GiancaGIS_AddInGeometricNetwork_btnRimuoviGraphicsMappa"/>
+          </Items>
+        </Toolbar>
+      </Toolbars>
+      <Menus>
+        <Menu id="GiancaGIS_AddInGeometricNetwork_Menu_Trace" caption="GN Trace" isRootMenu="true">
+          <Items>
+            <Item refID="AddInGeometricNetwork_ToolSelezionaLinea" />
+            <Button refID="AddInGeometricNetwork_ArcGISAddin1" />
+          </Items>
+        </Menu>
+        <Menu id="GiancaGIS_AddInGeometricNetwork_Menu_Selezione" caption="Ricava Info oggetto GN" isRootMenu="true">
+          <Items>
+            <Item refID="GiancaGIS_AddInGeometricNetwork_toolSelezionaElementoPuntualeGN" />
+            <Item refID="GiancaGIS_AddInGeometricNetwork_toolSelezionaElementoLineareGN" />
+            <Button refID="GiancaGIS_AddInGeometricNetwork_apriDockableSelezione" />
+          </Items>
+        </Menu>
+      </Menus>
+    </ArcMap>
+  </AddIn>
+</ESRI.Configuration>
