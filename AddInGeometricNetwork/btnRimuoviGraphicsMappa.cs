@@ -34,7 +34,8 @@ namespace AddInGeometricNetwork
 
                 // Mi occupo di svuotare i Graphics
                 activeView.GraphicsContainer.DeleteAllElements();
-                activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, activeView.Extent);
+                activeView.Refresh();
+                //activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, activeView.Extent);
             }
             catch (Exception)
             {

@@ -1,6 +1,8 @@
-﻿using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.NetworkAnalysis;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +17,11 @@ namespace AddInGeometricNetwork.Globali
     {
         internal static string avvisoDownloadCompletato = $@"Download completato!{Environment.NewLine}Il file è disponibile sul desktop.";
         internal static string avvisoSceltaInvalidaCombobox = "Scelta invalida!";
+    }
+
+    internal static class StatoEstensione
+    {
+        internal static bool estensioneAttiva = false;
     }
 
     internal static class VariabiliGlobaliClass
@@ -181,6 +188,17 @@ namespace AddInGeometricNetwork.Globali
                 this.GN = ((INetworkFeature)Feature).GeometricNetwork;
             }
         }
+
+        public int RicavaEID(IMap dataframe)
+        {
+            IPointToEID pointToEID = new PointToEID() as IPointToEID;
+            pointToEID.GeometricNetwork = this.GN;
+            pointToEID.SourceMap = dataframe;
+            pointToEID.SnapTolerance = 10;     //  set a snap tolerance of 10 map units
+            pointToEID.GetNearestJunction(this.ObjPuntoESRI, out int EID, out IPoint outPoint);
+
+            return EID;
+        }
     }
 
     public class LineaGiancaGISClass : ILineaGiancaGIS
@@ -241,6 +259,8 @@ namespace AddInGeometricNetwork.Globali
         IGeometricNetwork GN { get; set; }
 
         void RicavaGN();
+
+        int RicavaEID(IMap dataframe);
     }
 
     public interface ILineaGiancaGIS
