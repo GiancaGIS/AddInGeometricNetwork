@@ -36,17 +36,17 @@
             this.listBoxEdge = new System.Windows.Forms.ListBox();
             this.buttonTrace = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.checkBoxZoom = new System.Windows.Forms.CheckBox();
             this.listBoxJunctionFinale = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxJunctionIniziale = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.listBoxTutteJunction = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.Tab1 = new System.Windows.Forms.TabControl();
-            this.checkBoxZoom = new System.Windows.Forms.CheckBox();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -131,6 +131,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
             this.tabPage1.Controls.Add(this.button3);
             this.tabPage1.Controls.Add(this.groupBox1);
@@ -143,6 +144,17 @@
             this.tabPage1.Size = new System.Drawing.Size(602, 569);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Analisi Junction";
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.button3.Location = new System.Drawing.Point(25, 481);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(144, 32);
+            this.button3.TabIndex = 5;
+            this.button3.Text = "Rimuovi Graphics";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // groupBox1
             // 
@@ -158,17 +170,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Analisi Per Simple / Complex Edge";
             // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.button3.Location = new System.Drawing.Point(25, 481);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(144, 32);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Rimuovi Graphics";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -177,6 +178,17 @@
             this.label2.Size = new System.Drawing.Size(103, 17);
             this.label2.TabIndex = 4;
             this.label2.Text = "Junction Finale";
+            // 
+            // checkBoxZoom
+            // 
+            this.checkBoxZoom.AutoSize = true;
+            this.checkBoxZoom.Location = new System.Drawing.Point(265, 45);
+            this.checkBoxZoom.Name = "checkBoxZoom";
+            this.checkBoxZoom.Size = new System.Drawing.Size(169, 21);
+            this.checkBoxZoom.TabIndex = 8;
+            this.checkBoxZoom.Text = "zooma su tratta scelta";
+            this.checkBoxZoom.UseVisualStyleBackColor = true;
+            this.checkBoxZoom.CheckedChanged += new System.EventHandler(this.checkBoxZoom_CheckedChanged);
             // 
             // listBoxJunctionFinale
             // 
@@ -205,6 +217,15 @@
             this.listBoxJunctionIniziale.Size = new System.Drawing.Size(434, 36);
             this.listBoxJunctionIniziale.TabIndex = 1;
             // 
+            // listBoxTutteJunction
+            // 
+            this.listBoxTutteJunction.FormattingEnabled = true;
+            this.listBoxTutteJunction.ItemHeight = 16;
+            this.listBoxTutteJunction.Location = new System.Drawing.Point(6, 299);
+            this.listBoxTutteJunction.Name = "listBoxTutteJunction";
+            this.listBoxTutteJunction.Size = new System.Drawing.Size(434, 148);
+            this.listBoxTutteJunction.TabIndex = 6;
+            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.RosyBrown;
@@ -215,15 +236,6 @@
             this.button1.Text = "Pulisci";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // listBoxTutteJunction
-            // 
-            this.listBoxTutteJunction.FormattingEnabled = true;
-            this.listBoxTutteJunction.ItemHeight = 16;
-            this.listBoxTutteJunction.Location = new System.Drawing.Point(6, 299);
-            this.listBoxTutteJunction.Name = "listBoxTutteJunction";
-            this.listBoxTutteJunction.Size = new System.Drawing.Size(434, 148);
-            this.listBoxTutteJunction.TabIndex = 6;
             // 
             // label3
             // 
@@ -243,17 +255,6 @@
             this.Tab1.SelectedIndex = 0;
             this.Tab1.Size = new System.Drawing.Size(610, 598);
             this.Tab1.TabIndex = 0;
-            // 
-            // checkBoxZoom
-            // 
-            this.checkBoxZoom.AutoSize = true;
-            this.checkBoxZoom.Location = new System.Drawing.Point(265, 45);
-            this.checkBoxZoom.Name = "checkBoxZoom";
-            this.checkBoxZoom.Size = new System.Drawing.Size(169, 21);
-            this.checkBoxZoom.TabIndex = 8;
-            this.checkBoxZoom.Text = "zooma su tratta scelta";
-            this.checkBoxZoom.UseVisualStyleBackColor = true;
-            this.checkBoxZoom.CheckedChanged += new System.EventHandler(this.checkBoxZoom_CheckedChanged);
             // 
             // DockableWindow
             // 
