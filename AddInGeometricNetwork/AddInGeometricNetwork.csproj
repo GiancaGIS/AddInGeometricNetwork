@@ -82,6 +82,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="btnRimuoviGraphicsMappa.cs" />
+    <Compile Include="engineGNValidation.cs" />
+    <Compile Include="estensioneValidatoreTopologico.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -436,6 +436,8 @@ namespace AddInGeometricNetwork
                 IMxDocument mxDocument = ArcMap.Application.Document as IMxDocument;
                 IActiveView activeView = mxDocument.ActiveView;
 
+                base.EseguiSelezioneEdge(mxDocument, activeView, arg.X, arg.Y);
+
                 if (base.Polilinea.ObjLineaESRI != null)
                 {
                     ToolSelezionaLinea toolSelezionaLinea = new ToolSelezionaLinea();
@@ -655,6 +657,8 @@ namespace AddInGeometricNetwork
                 // Inizializzo le variabili per la status bar di ArcMap...
                 IStatusBar barraStato = ArcMap.Application.StatusBar;
                 barraStato.ProgressAnimation.Animation = esriAnimations.esriAnimationDrawing;
+
+                base.EseguiSelezioneJunction(mxDocument, activeView, arg.X, arg.Y);
 
                 if (base.Punto.ObjPuntoESRI != null)
                 {
