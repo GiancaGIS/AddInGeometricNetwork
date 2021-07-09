@@ -195,7 +195,7 @@ namespace AddInGeometricNetwork
         {
             try
             {
-                string path = $@"C:\Users\{Environment.UserName}\Desktop\{this.textBoxNomeFile.Text}.csv";
+                string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"{this.textBoxNomeFile.Text}.csv");
 
                 if (this.sceltaCombobox.ToLower() == "complex edge")
                 {
