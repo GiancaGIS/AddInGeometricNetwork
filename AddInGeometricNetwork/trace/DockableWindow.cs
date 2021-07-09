@@ -8,6 +8,7 @@ using ESRI.ArcGIS.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 
@@ -119,7 +120,7 @@ namespace AddInGeometricNetwork
             {
                 int OID = VariabiliGlobaliClass.featureLineare.OID;
                 DialogResult dialogResult =
-                    MessageBox.Show($@"Avviare Trace ricorsivo per la Tratta avente ObjectID: {OID}?", "Attenzione", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    MessageBox.Show($"Avviare Trace ricorsivo per la Tratta avente ObjectID: {OID}?", "Attenzione", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -146,16 +147,16 @@ namespace AddInGeometricNetwork
 
                     List<int> listaOIDEdge = new List<int>();
 
-                    INetworkFeature networkFeature = VariabiliGlobaliClass.featureLineare as INetworkFeature;
+                    INetworkFeature networkFeature = (INetworkFeature)VariabiliGlobaliClass.featureLineare;
                     INetwork network = networkFeature.GeometricNetwork.Network;
                     int numEdgeNetwork = network.EdgeCount;
 
-                    INetElements netElements = network as INetElements;
+                    INetElements netElements = (INetElements)network;
 
                     IForwardStarGEN fStar =
                         (IForwardStarGEN)network.CreateForwardStar(false, null, null, null, null);
 
-                    IEdgeFeature edgeFeature = VariabiliGlobaliClass.featureLineare as IEdgeFeature;
+                    IEdgeFeature edgeFeature = (IEdgeFeature)VariabiliGlobaliClass.featureLineare;
 
                     int EID_FromJunction_DI_PARTENZA = edgeFeature.FromJunctionEID;
 
@@ -207,12 +208,12 @@ namespace AddInGeometricNetwork
 
                         // Ora che ho ricavato tutte le EDGE connesse alla Junction finale le aggiungo in coda
 
-                        for (int i = 0; i < arrayEIDJunctionAdiacenti.Length; i++)
+                        for (int i = 0; i < arrayEIDJunctionAdiacenti.Length; i += 1)
                         {
-                            if (!(dizEIDNumEdge.ContainsKey(arrayEIDJunctionAdiacenti[i]))
+                            if (!dizEIDNumEdge.ContainsKey(arrayEIDJunctionAdiacenti[i])
                                 && arrayEIDJunctionAdiacenti[i] != EID_analizzato && arrayEIDJunctionAdiacenti[i] != EID_FromJunction_DI_PARTENZA)
                             {
-                                if (arrayVersoEdge[i] == false) //Values in the ReverseOrientation array are TRUE if the edge "enters" the junction
+                                if (!arrayVersoEdge[i]) //Values in the ReverseOrientation array are TRUE if the edge "enters" the junction
                                 {
                                     dizEIDNumEdge.Add(arrayEIDJunctionAdiacenti[i], arrayEIDEdge.Length);
 
@@ -221,11 +222,10 @@ namespace AddInGeometricNetwork
                             }
                         }
 
-                        #region Salvo gli OID delle tratte / edge
-
-                        for (int i = 0; i < arrayEIDEdge.Length; i++)
+                        // Salvo gli OID delle tratte / edge
+                        for (int i = 0; i < arrayEIDEdge.Length; i += 1)
                         {
-                            if (arrayVersoEdge[i] == false)
+                            if (!arrayVersoEdge[i])
                             {
                                 netElements.QueryIDs(arrayEIDEdge[i], esriElementType.esriETEdge,
                                 out int UserClassID, out UserID, out int UserSubID); // USER ID è il ObjectID!
@@ -233,23 +233,19 @@ namespace AddInGeometricNetwork
                                 listaOIDEdge.Add(UserID);
                                 this.listBoxJunction.Items.Add(arrayEIDJunctionAdiacenti[i]);
                             }
-                            contatore++;
+                            contatore += 1;
                         }
-                        #endregion
 
-
-                        #region Paranoia Check --> Se abbiamo superato il numero totale di Edge nella Network, spacco ed esco
-
+                        // Paranoia Check --> Se ho superato il numero totale di Edge nella Network esco.
+                        // In tal modo mi astraggo da eventuali problematiche di ciclo infinito, loop su sè stesso nell GN.
                         if (contatore > numEdgeNetwork) break;
-
-                        #endregion
 
                         stepProgressor.Step();
                     }
 
                     #region Seleziono tutti gli oggetti della linea.                
 
-                    geometryBag = new GeometryBag() as IGeometry;
+                    geometryBag = new GeometryBag();
                     geometryColl = geometryBag as IGeometryCollection;
 
                     List<int> listaOIDEdgeBonificata = listaOIDEdge.Distinct().ToList(); // Elimino di eventuali doppioni
@@ -263,7 +259,7 @@ namespace AddInGeometricNetwork
                             this.listBoxEdge.Items.Add(listaOIDEdgeBonificata[j]);
 
                             IQueryFilter2 queryFilter = new QueryFilter() as IQueryFilter2;
-                            queryFilter.WhereClause = $@"OBJECTID = {listaOIDEdge[j]}";
+                            queryFilter.WhereClause = $"OBJECTID = {listaOIDEdge[j]}";
 
                             IFeatureCursor featureCursor =
                                 VariabiliGlobaliClass.featureLayerTrace.FeatureClass.Search(queryFilter, false);
@@ -272,7 +268,7 @@ namespace AddInGeometricNetwork
 
                             geometryColl.AddGeometry(feature.ShapeCopy);
 
-                            ESRI.ArcGIS.ADF.ComReleaser.ReleaseCOMObject(featureCursor);
+                            Marshal.ReleaseComObject(featureCursor);
 
                             stepProgressor.Step();
                         }
@@ -321,7 +317,7 @@ namespace AddInGeometricNetwork
 
         private void checkBoxZoom_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.checkBoxZoom.Checked == true)
+            if (this.checkBoxZoom.Checked)
             {
                 VariabiliGlobaliClass.blnZoomSuTratta = true;
             }
